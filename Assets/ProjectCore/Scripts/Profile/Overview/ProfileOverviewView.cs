@@ -3,27 +3,26 @@ using System.Collections.Generic;
 using ProjectCore.Scripts.Data.Matching;
 using ProjectCore.Scripts.Utilities.UI;
 using UnityEngine;
-using Zenject;
 
 namespace ProjectCore.Scripts.Profile.Overview
 {
     public class ProfileOverviewView : WindowBase
     {
+        [SerializeField] private ProfileOverviewMatchTypeDropdown _dropdown;
         [SerializeField] private Transform _showMatchButtonsRoot;
         [SerializeField] private Transform _matchParametersRoot;
 
-        private readonly List<MatchParameterBlock> _currentMatchParameterBlocks = new();
-        private readonly List<ShowMatchStatsButton> _currentStatsMatchShowButtons = new();
+        private readonly List<ProfileOverviewShowMatchStatsButton> _currentStatsMatchShowButtons = new();
+        private readonly List<ProfileOverviewMatchParameterBlock> _currentMatchParameterBlocks = new();
+        private ProfileController _profileController;
 
-        private ProfileOverviewUIFactory _profileUIFactory;
-
-        [Inject]
-        public void Construct(ProfileOverviewUIFactory profileUIFactory) => _profileUIFactory = profileUIFactory;
-
-        public void Initialize(MatchData[] matches)
+        public void Initialize(MatchData[] matches, ProfileController profileController)
         {
+            _profileController = profileController;
+
             SetMatches(matches);
             Close();
+            _dropdown.Initialize(profileController);
         }
 
         public override void Open()
@@ -46,7 +45,7 @@ namespace ProjectCore.Scripts.Profile.Overview
 
             for (var i = 0; i < showCount; i++)
             {
-                var button = _profileUIFactory.CreateMatchStatsShowButton(matches[i], _showMatchButtonsRoot, this);
+                var button = _profileController.CreateMatchStatsShowButton(matches[i], _showMatchButtonsRoot);
                 _currentStatsMatchShowButtons.Add(button);
             }
 
@@ -59,7 +58,7 @@ namespace ProjectCore.Scripts.Profile.Overview
 
             foreach (var parameter in parameters)
             {
-                var block = _profileUIFactory.CreateMatchParameterBlock(parameter, _matchParametersRoot);
+                var block = _profileController.CreateMatchParameterBlock(parameter, _matchParametersRoot);
                 _currentMatchParameterBlocks.Add(block);
             }
         }
@@ -67,7 +66,7 @@ namespace ProjectCore.Scripts.Profile.Overview
         private void DestroyCurrentMatchParameters()
         {
             foreach (var oldBlock in _currentMatchParameterBlocks)
-                _profileUIFactory.DestroyMatchParameterBlock(oldBlock);
+                _profileController.DestroyMatchParameterBlock(oldBlock);
 
             _currentMatchParameterBlocks.Clear();
         }
@@ -75,7 +74,7 @@ namespace ProjectCore.Scripts.Profile.Overview
         private void DestroyCurrentStatsShowButton()
         {
             foreach (var oldButton in _currentStatsMatchShowButtons)
-                _profileUIFactory.DestroyMatchStatsShowButton(oldButton);
+                _profileController.DestroyMatchStatsShowButton(oldButton);
 
             _currentStatsMatchShowButtons.Clear();
         }

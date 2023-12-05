@@ -1,9 +1,7 @@
-﻿using ProjectCore.Scripts.Profile.Infrastructure.Data;
-using ProjectCore.Scripts.Utilities.UI;
+﻿using ProjectCore.Scripts.Utilities.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace ProjectCore.Scripts.Profile.Main
 {
@@ -12,32 +10,24 @@ namespace ProjectCore.Scripts.Profile.Main
         [SerializeField] private TextMeshProUGUI _buttonText;
         [SerializeField] private Image _selectableLines;
         [SerializeField] private ProfileWindowType _type;
+        [SerializeField] private Material _textHideMaterial;
+        [SerializeField] private Material _textSelectMaterial;
+        private ProfileController _profileController;
 
-        private ProfileStaticDataProvider _staticDataProvider;
-        private ProfileConfig _config;
-        private ProfileUIWindowManager _windowManager;
-
-        [Inject]
-        public void Construct(ProfileStaticDataProvider staticDataProvider, ProfileUIWindowManager windowManager)
+        public void Initialize(ProfileController profileController)
         {
-            _staticDataProvider = staticDataProvider;
-            _windowManager = windowManager;
-        }
-
-        public void Initialize()
-        {
-            _config = _staticDataProvider.GetConfig();
+            _profileController = profileController;
             Disable();
         }
 
         private protected override void OnClick()
         {
-            if (_windowManager.IsCurrentWindow(_type))
-                _windowManager.CloseCurrentWindow();
+            if (_profileController.IsCurrentWindow(_type))
+                _profileController.CloseCurrentWindow();
             else
             {
-                _windowManager.OpenWindow(_type);
-                _windowManager.OnWindowClosed += Disable;
+                _profileController.OpenWindow(_type);
+                _profileController.OnWindowClosedEvent += Disable;
                 Enable();
             }
         }
@@ -45,14 +35,14 @@ namespace ProjectCore.Scripts.Profile.Main
         private void Enable()
         {
             _selectableLines.gameObject.SetActive(true);
-            _buttonText.fontMaterial = _config.TextSelectMaterial;
+            _buttonText.fontMaterial = _textSelectMaterial;
         }
 
         private void Disable()
         {
-            _windowManager.OnWindowClosed -= Disable;
+            _profileController.OnWindowClosedEvent -= Disable;
             _selectableLines.gameObject.SetActive(false);
-            _buttonText.fontMaterial = _config.TextHideMaterial;
+            _buttonText.fontMaterial = _textHideMaterial;
         }
     }
 }

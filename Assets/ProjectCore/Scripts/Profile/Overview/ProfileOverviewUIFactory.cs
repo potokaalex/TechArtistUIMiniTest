@@ -28,31 +28,31 @@ namespace ProjectCore.Scripts.Profile.Overview
             return item;
         }
 
-        public ShowMatchStatsButton CreateMatchStatsShowButton(MatchData matchData, Transform root,
-            ProfileOverviewView view)
+        public ProfileOverviewShowMatchStatsButton CreateMatchStatsShowButton(MatchData matchData, Transform root,
+            ProfileController profileController)
         {
-            var prefab = _config.ShowMatchStatsButtonPrefab;
-            var args = new object[] { matchData, view };
-            var item = _instantiator.InstantiatePrefabForComponent<ShowMatchStatsButton>(prefab, args);
+            var prefab = _config.ProfileOverviewShowMatchStatsButtonPrefab;
+            var item = _instantiator.InstantiatePrefabForComponent<ProfileOverviewShowMatchStatsButton>(prefab);
 
             item.transform.SetParent(root, false);
-            item.Initialize();
+            item.Initialize(matchData, _staticDataProvider.GetIcon(matchData.Icon), profileController);
             return item;
         }
 
-        public MatchParameterBlock CreateMatchParameterBlock(MatchParameter parameter, Transform root)
+        public ProfileOverviewMatchParameterBlock CreateMatchParameterBlock(MatchParameter parameter, Transform root)
         {
-            var prefab = _config.MatchParameterBlockPrefab;
-            var args = new object[] { parameter };
-            var item = _instantiator.InstantiatePrefabForComponent<MatchParameterBlock>(prefab, args);
+            var prefab = _config.ProfileOverviewMatchParameterBlockPrefab;
+            var item = _instantiator.InstantiatePrefabForComponent<ProfileOverviewMatchParameterBlock>(prefab);
 
             item.transform.SetParent(root, false);
-            item.Initialize();
+            item.Initialize(parameter);
             return item;
         }
 
-        public void DestroyMatchStatsShowButton(ShowMatchStatsButton button) => Object.Destroy(button.gameObject);
+        public void DestroyMatchStatsShowButton(ProfileOverviewShowMatchStatsButton button) =>
+            Object.Destroy(button.gameObject);
 
-        public void DestroyMatchParameterBlock(MatchParameterBlock block) => Object.Destroy(block.gameObject);
+        public void DestroyMatchParameterBlock(ProfileOverviewMatchParameterBlock block) =>
+            Object.Destroy(block.gameObject);
     }
 }

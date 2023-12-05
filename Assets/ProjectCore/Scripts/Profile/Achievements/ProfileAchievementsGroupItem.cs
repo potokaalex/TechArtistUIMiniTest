@@ -8,19 +8,15 @@ using Zenject;
 
 namespace ProjectCore.Scripts.Profile.Achievements
 {
-    public class AchievementsGroupItem : MonoBehaviour
+    public class ProfileAchievementsGroupItem : MonoBehaviour
     {
         [SerializeField] private Image _iconImage;
         [SerializeField] private TextMeshProUGUI _headerText;
         [SerializeField] private TextMeshProUGUI _subHeaderText;
-        private ProfileStaticDataProvider _staticDataProvider;
 
-        [Inject]
-        public void Construct(ProfileStaticDataProvider staticDataProvider) => _staticDataProvider = staticDataProvider;
-
-        public void Initialize(AchievementData data)
+        public void Initialize(AchievementData data, Sprite icon)
         {
-            _iconImage.sprite = _staticDataProvider.GetIcon(data.Icon);
+            _iconImage.sprite = icon;
             _headerText.text = data.Name;
             _subHeaderText.text = "completed on: " + data.CompletedOn.Date.ToString("dd/MM/yyyy");
         }

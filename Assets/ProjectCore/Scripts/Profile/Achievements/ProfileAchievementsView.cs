@@ -1,20 +1,18 @@
 ﻿using ProjectCore.Scripts.Data;
 using ProjectCore.Scripts.Utilities.UI;
 using UnityEngine;
-using Zenject;
 
 namespace ProjectCore.Scripts.Profile.Achievements
 {
     public class ProfileAchievementsView : WindowBase
     {
         [SerializeField] private Transform _achievementsGroupRoot;
-        private ProfileAchievementsUIFactory _profileUIFactory;
+        private ProfileController _profileController;
 
-        [Inject]
-        public void Construct(ProfileAchievementsUIFactory profileUIFactory) => _profileUIFactory = profileUIFactory;
-
-        public void Initialize(AchievementData[] achievements)
+        public void Initialize(AchievementData[] achievements, ProfileController profileController)
         {
+            _profileController = profileController;
+
             Close();
             CreateAchievements(achievements);
         }
@@ -33,14 +31,14 @@ namespace ProjectCore.Scripts.Profile.Achievements
 
         private void CreateAchievements(AchievementData[] achievements)
         {
-            var currentGroup = _profileUIFactory.CreateAchievementsGroup(_achievementsGroupRoot);
+            var currentGroup = _profileController.CreateAchievementsGroup(_achievementsGroupRoot);
 
             for (var i = 0; i < achievements.Length; i++)
             {
                 if (i != 0 && i % 3 == 0)
-                    currentGroup = _profileUIFactory.CreateAchievementsGroup(_achievementsGroupRoot);
+                    currentGroup = _profileController.CreateAchievementsGroup(_achievementsGroupRoot);
 
-                _profileUIFactory.CreateAchievementsGroupItem(achievements[i], currentGroup.transform);
+                _profileController.CreateAchievementsGroupItem(achievements[i], currentGroup.transform);
             }
         }
     }

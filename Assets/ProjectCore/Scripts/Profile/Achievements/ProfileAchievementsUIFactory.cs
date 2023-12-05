@@ -28,10 +28,10 @@ namespace ProjectCore.Scripts.Profile.Achievements
             return item;
         }
 
-        public AchievementsGroup CreateAchievementsGroup(Transform root)
+        public ProfileAchievementsGroup CreateAchievementsGroup(Transform root)
         {
-            var prefab = _config.AchievementsGroupPrefab;
-            var item = _instantiator.InstantiatePrefabForComponent<AchievementsGroup>(prefab);
+            var prefab = _config.ProfileAchievementsGroupPrefab;
+            var item = _instantiator.InstantiatePrefabForComponent<ProfileAchievementsGroup>(prefab);
 
             item.transform.SetParent(root, false);
             return item;
@@ -39,11 +39,11 @@ namespace ProjectCore.Scripts.Profile.Achievements
 
         public void CreateAchievementsGroupItem(AchievementData achievementData, Transform root)
         {
-            var prefab = _config.AchievementsGroupItemPrefab;
-            var item = _instantiator.InstantiatePrefabForComponent<AchievementsGroupItem>(prefab);
+            var prefab = _config.ProfileAchievementsGroupItemPrefab;
+            var item = _instantiator.InstantiatePrefabForComponent<ProfileAchievementsGroupItem>(prefab);
 
             item.transform.SetParent(root, false);
-            item.Initialize(achievementData);
+            item.Initialize(achievementData, _staticDataProvider.GetIcon(achievementData.Icon));
         }
     }
 }

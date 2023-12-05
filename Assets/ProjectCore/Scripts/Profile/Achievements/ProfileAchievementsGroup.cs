@@ -2,7 +2,7 @@
 
 namespace ProjectCore.Scripts.Profile.Achievements
 {
-    public class AchievementsGroup : MonoBehaviour
+    public class ProfileAchievementsGroup : MonoBehaviour
     {
     }
 }

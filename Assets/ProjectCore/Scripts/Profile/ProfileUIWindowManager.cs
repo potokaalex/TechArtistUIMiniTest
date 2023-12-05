@@ -8,13 +8,14 @@ namespace ProjectCore.Scripts.Profile
 {
     public class ProfileUIWindowManager
     {
+        private readonly ProfileController _controller;
+        private WindowBase _achievementsWindow;
+        private WindowBase _overviewWindow;
+        
         private ProfileWindowType _currentWindowType;
         private WindowBase _currentWindow;
 
-        private WindowBase _achievementsWindow;
-        private WindowBase _overviewWindow;
-
-        public event Action OnWindowClosed;
+        public ProfileUIWindowManager(ProfileController controller) => _controller = controller;
 
         public void Initialize(ProfileAchievementsView achievementsView, ProfileOverviewView overviewView)
         {
@@ -50,7 +51,7 @@ namespace ProjectCore.Scripts.Profile
         private void CloseWindow()
         {
             _currentWindow?.Close();
-            OnWindowClosed?.Invoke();
+            _controller.OnCurrentWindowClosed();
         }
 
         private void SwitchWindowTo(WindowBase window)

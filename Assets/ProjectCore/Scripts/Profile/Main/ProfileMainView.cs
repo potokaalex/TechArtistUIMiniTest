@@ -1,11 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using ProjectCore.Scripts.Data;
-using ProjectCore.Scripts.Profile.Infrastructure.Data;
-using ProjectCore.Scripts.Project.AssetProvider;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace ProjectCore.Scripts.Profile.Main
 {
@@ -17,20 +14,16 @@ namespace ProjectCore.Scripts.Profile.Main
         [SerializeField] private TextMeshProUGUI _experienceText;
         [SerializeField] private Slider _experienceSlider;
         [SerializeField] private ProfileSwitchWindowButton[] _windowSwitchButtons;
-        private ProfileStaticDataProvider _staticDataProvider;
 
-        [Inject]
-        public void Construct(ProfileStaticDataProvider staticDataProvider) => _staticDataProvider = staticDataProvider;
-
-        public void Initialize(AccountData data)
+        public void Initialize(AccountData data, Sprite avatarIcon, ProfileController profileController)
         {
-            SetAvatarIcon(_staticDataProvider.GetIcon(data.AvatarIcon));
+            SetAvatarIcon(avatarIcon);
             SetName(data.Name);
             SetLevel(data.Level);
             SetExperience(data.Experience, data.ExperienceMax);
 
             foreach (var button in _windowSwitchButtons)
-                button.Initialize();
+                button.Initialize(profileController);
         }
 
         private void SetAvatarIcon(Sprite avatarIcon) => _avatarImage.sprite = avatarIcon;

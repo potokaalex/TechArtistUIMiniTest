@@ -16,10 +16,9 @@ namespace ProjectCore.Scripts.Profile
         private readonly ProfileController _profileController;
         private ProfileConfig _config;
 
-        public ProfileUIFactory(ProfileStaticDataProvider staticDataProvider, IInstantiator instantiator, 
-            ProfileAchievementsUIFactory achievementsUIFactory,
-            ProfileOverviewUIFactory overviewUIFactory, ProfileUIWindowManager windowManager,
-            ProfileController profileController)
+        public ProfileUIFactory(ProfileStaticDataProvider staticDataProvider, IInstantiator instantiator,
+            ProfileAchievementsUIFactory achievementsUIFactory, ProfileOverviewUIFactory overviewUIFactory,
+            ProfileUIWindowManager windowManager, ProfileController profileController)
         {
             _staticDataProvider = staticDataProvider;
             _instantiator = instantiator;
@@ -38,7 +37,7 @@ namespace ProjectCore.Scripts.Profile
             var achievementsView = _achievementsUIFactory.CreateView(viewsRoot);
             var overviewView = _overviewUIFactory.CreateView(viewsRoot);
 
-            _profileController.Initialize(mainView, achievementsView, overviewView);
+            _profileController.Initialize(mainView, achievementsView, overviewView, _windowManager);
             _windowManager.Initialize(achievementsView, overviewView);
         }
 
