@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TextSelectMaterial: {fileID: 2100000, guid: e1388ce7dd46b1f4c8a903191f6d101b, type: 2}
   TextHideMaterial: {fileID: 2100000, guid: 8dc7f629a6bddae4d8e47ac861916512, type: 2}
-  MainControllerPrefab: {fileID: 219339660743082145, guid: 2680027eae25a514c9756ec3a6a66c33, type: 3}
-  MainViewPrefab: {fileID: 4819990788119067599, guid: 90e2049e6e75fd94782228ff43bca9d3, type: 3}
+  MainViewPrefab: {fileID: 7797829709990586548, guid: 2680027eae25a514c9756ec3a6a66c33, type: 3}
   AchievementsViewPrefab: {fileID: 2788014499040986901, guid: 23ecaa6dbd1b38246a0b54dcde05558f, type: 3}
   OverviewViewPrefab: {fileID: 92292897762636744, guid: 2d8deec0c1a81dc4397a93e9518afa2e, type: 3}
   ShowMatchStatsButtonPrefab: {fileID: 4417145671206968150, guid: f366d00f338ea4044989d0ceac858255, type: 3}

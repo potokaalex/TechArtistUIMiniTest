@@ -2,15 +2,15 @@ using System.Linq;
 using ProjectCore.Scripts.Data;
 using ProjectCore.Scripts.Data.Matching;
 using ProjectCore.Scripts.Profile.Achievements;
+using ProjectCore.Scripts.Profile.Main;
 using ProjectCore.Scripts.Profile.Overview;
-using UnityEngine;
 using Zenject;
 
-namespace ProjectCore.Scripts.Profile.Main
+namespace ProjectCore.Scripts.Profile
 {
-    public class ProfileMainController : MonoBehaviour
+    public class ProfileController
     {
-        private ProfileModel _model;
+        private readonly ProfileModel _model;
 
         private ProfileOverviewView _overviewView;
         private ProfileAchievementsView _achievementsView;
@@ -18,7 +18,7 @@ namespace ProjectCore.Scripts.Profile.Main
         private AccountData _data;
 
         [Inject]
-        public void Construct(ProfileModel model) => _model = model;
+        public ProfileController(ProfileModel model) => _model = model;
 
         public void Initialize(ProfileMainView mainView, ProfileAchievementsView achievementsView,
             ProfileOverviewView overviewView)
@@ -33,8 +33,6 @@ namespace ProjectCore.Scripts.Profile.Main
             _achievementsView.Initialize(_data.Achievements);
             _overviewView.Initialize(_data.Matches.Where(m => m.MatchType == MatchType.Unranked).ToArray());
         }
-
-        public Transform GetViewsParent() => gameObject.transform;
 
         public void SetOverviewMatchesFilter(MatchType type) =>
             _overviewView.SetMatches(_data.Matches.Where(m => m.MatchType == type).ToArray());

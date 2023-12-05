@@ -11,8 +11,6 @@ namespace ProjectCore.Scripts.Profile.Infrastructure.Data
         public Material TextSelectMaterial;
         public Material TextHideMaterial;
 
-        public ProfileMainController MainControllerPrefab;
-
         public ProfileMainView MainViewPrefab;
         public ProfileAchievementsView AchievementsViewPrefab;
         public ProfileOverviewView OverviewViewPrefab;

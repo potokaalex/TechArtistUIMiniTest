@@ -2,7 +2,6 @@
 using ProjectCore.Scripts.Profile.Infrastructure.Data;
 using ProjectCore.Scripts.Profile.Main;
 using ProjectCore.Scripts.Profile.Overview;
-using UnityEngine;
 using Zenject;
 
 namespace ProjectCore.Scripts.Profile
@@ -11,53 +10,43 @@ namespace ProjectCore.Scripts.Profile
     {
         private readonly ProfileConfigProvider _configProvider;
         private readonly IInstantiator _instantiator;
-        private readonly ProfileUIProvider _profileUIProvider;
         private readonly ProfileAchievementsUIFactory _achievementsUIFactory;
         private readonly ProfileOverviewUIFactory _overviewUIFactory;
         private readonly ProfileUIWindowManager _windowManager;
+        private readonly ProfileController _profileController;
         private ProfileConfig _config;
 
-        public ProfileUIFactory(ProfileConfigProvider configProvider, IInstantiator instantiator,
-            ProfileUIProvider profileUIProvider, ProfileAchievementsUIFactory achievementsUIFactory,
-            ProfileOverviewUIFactory overviewUIFactory, ProfileUIWindowManager windowManager)
+        public ProfileUIFactory(ProfileConfigProvider configProvider, IInstantiator instantiator, 
+            ProfileAchievementsUIFactory achievementsUIFactory,
+            ProfileOverviewUIFactory overviewUIFactory, ProfileUIWindowManager windowManager,
+            ProfileController profileController)
         {
             _configProvider = configProvider;
             _instantiator = instantiator;
-            _profileUIProvider = profileUIProvider;
             _achievementsUIFactory = achievementsUIFactory;
             _overviewUIFactory = overviewUIFactory;
             _windowManager = windowManager;
+            _profileController = profileController;
         }
 
         public void Initialize() => _config = _configProvider.GetConfig();
 
         public void Create()
         {
-            var mainController = CreateMainController();
-            var viewsRoot = mainController.GetViewsParent();
-            var mainView = CreateMainView(viewsRoot);
+            var mainView = CreateMainView();
+            var viewsRoot = mainView.transform;
             var achievementsView = _achievementsUIFactory.CreateView(viewsRoot);
             var overviewView = _overviewUIFactory.CreateView(viewsRoot);
 
-            _profileUIProvider.Initialize(mainController);
-            mainController.Initialize(mainView, achievementsView, overviewView);
+            _profileController.Initialize(mainView, achievementsView, overviewView);
             _windowManager.Initialize(achievementsView, overviewView);
         }
 
-        private ProfileMainController CreateMainController()
-        {
-            var prefab = _config.MainControllerPrefab;
-            var controller = _instantiator.InstantiatePrefabForComponent<ProfileMainController>(prefab);
-
-            return controller;
-        }
-
-        private ProfileMainView CreateMainView(Transform viewsRoot)
+        private ProfileMainView CreateMainView()
         {
             var prefab = _config.MainViewPrefab;
             var item = _instantiator.InstantiatePrefabForComponent<ProfileMainView>(prefab);
 
-            item.transform.SetParent(viewsRoot, false);
             return item;
         }
     }

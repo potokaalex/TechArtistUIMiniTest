@@ -11,7 +11,6 @@ namespace ProjectCore.Scripts.Profile.Overview
     {
         [SerializeField] private Transform _showMatchButtonsRoot;
         [SerializeField] private Transform _matchParametersRoot;
-        [SerializeField] private MatchTypeDropdown _dropdown;
 
         private readonly List<MatchParameterBlock> _currentMatchParameterBlocks = new();
         private readonly List<ShowMatchStatsButton> _currentStatsMatchShowButtons = new();
@@ -25,7 +24,6 @@ namespace ProjectCore.Scripts.Profile.Overview
         {
             SetMatches(matches);
             Close();
-            _dropdown.Initialize();
         }
 
         public override void Open()

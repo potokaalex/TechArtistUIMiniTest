@@ -15,9 +15,9 @@ namespace ProjectCore.Scripts.Profile.Infrastructure
             BindFactories();
 
             Container.Bind<ProfileModel>().AsSingle();
+            Container.Bind<ProfileController>().AsSingle();
             Container.Bind<ProfileUIWindowManager>().AsSingle();
             Container.Bind<ProfileConfigProvider>().FromInstance(_profileConfigProvider).AsSingle();
-            Container.Bind<ProfileUIProvider>().AsSingle();
         }
 
         private void BindFactories()

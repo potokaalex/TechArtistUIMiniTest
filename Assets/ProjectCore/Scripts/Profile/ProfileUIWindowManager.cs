@@ -37,6 +37,8 @@ namespace ProjectCore.Scripts.Profile
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
+
+            _currentWindowType = type;
         }
 
         public void CloseCurrentWindow()

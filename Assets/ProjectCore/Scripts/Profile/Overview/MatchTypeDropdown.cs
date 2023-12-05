@@ -7,15 +7,12 @@ namespace ProjectCore.Scripts.Profile.Overview
 {
     public class MatchTypeDropdown : DropdownBase
     {
-        private ProfileUIProvider _profileUIProvider;
-        private ProfileMainController _mainController;
+        private ProfileController _profileController;
 
         [Inject]
-        public void Construct(ProfileUIProvider profileUIProvider) => _profileUIProvider = profileUIProvider;
-
-        public void Initialize() => _mainController = _profileUIProvider.GetMainController();
+        public void Construct(ProfileController controller) => _profileController = controller;
 
         private protected override void OnValueChanged(int number) =>
-            _mainController.SetOverviewMatchesFilter((MatchType)number);
+            _profileController.SetOverviewMatchesFilter((MatchType)number);
     }
 }
