@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using ProjectCore.Scripts.Data;
+using ProjectCore.Scripts.Profile.Infrastructure.Data;
 using ProjectCore.Scripts.Project.AssetProvider;
 using TMPro;
 using UnityEngine;
@@ -16,15 +17,14 @@ namespace ProjectCore.Scripts.Profile.Main
         [SerializeField] private TextMeshProUGUI _experienceText;
         [SerializeField] private Slider _experienceSlider;
         [SerializeField] private ProfileSwitchWindowButton[] _windowSwitchButtons;
-
-        private IAssetProvider _assetProvider;
+        private ProfileStaticDataProvider _staticDataProvider;
 
         [Inject]
-        public void Construct(IAssetProvider assetProvider) => _assetProvider = assetProvider;
+        public void Construct(ProfileStaticDataProvider staticDataProvider) => _staticDataProvider = staticDataProvider;
 
         public void Initialize(AccountData data)
         {
-            SetAvatarIcon(_assetProvider.Get<Sprite>(data.AvatarIcon));
+            SetAvatarIcon(_staticDataProvider.GetIcon(data.AvatarIcon));
             SetName(data.Name);
             SetLevel(data.Level);
             SetExperience(data.Experience, data.ExperienceMax);

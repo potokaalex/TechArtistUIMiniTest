@@ -8,7 +8,7 @@ namespace ProjectCore.Scripts.Profile.Infrastructure
 {
     public class ProfileInstaller : MonoInstaller
     {
-        [SerializeField] private ProfileConfigProvider _profileConfigProvider;
+        [SerializeField] private ProfileConfig _config;
 
         public override void InstallBindings()
         {
@@ -17,7 +17,7 @@ namespace ProjectCore.Scripts.Profile.Infrastructure
             Container.Bind<ProfileModel>().AsSingle();
             Container.Bind<ProfileController>().AsSingle();
             Container.Bind<ProfileUIWindowManager>().AsSingle();
-            Container.Bind<ProfileConfigProvider>().FromInstance(_profileConfigProvider).AsSingle();
+            Container.Bind<ProfileStaticDataProvider>().AsSingle().WithArguments(_config);
         }
 
         private void BindFactories()

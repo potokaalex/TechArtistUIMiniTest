@@ -8,7 +8,7 @@ namespace ProjectCore.Scripts.Profile
 {
     public class ProfileUIFactory : IInitializable
     {
-        private readonly ProfileConfigProvider _configProvider;
+        private readonly ProfileStaticDataProvider _staticDataProvider;
         private readonly IInstantiator _instantiator;
         private readonly ProfileAchievementsUIFactory _achievementsUIFactory;
         private readonly ProfileOverviewUIFactory _overviewUIFactory;
@@ -16,12 +16,12 @@ namespace ProjectCore.Scripts.Profile
         private readonly ProfileController _profileController;
         private ProfileConfig _config;
 
-        public ProfileUIFactory(ProfileConfigProvider configProvider, IInstantiator instantiator, 
+        public ProfileUIFactory(ProfileStaticDataProvider staticDataProvider, IInstantiator instantiator, 
             ProfileAchievementsUIFactory achievementsUIFactory,
             ProfileOverviewUIFactory overviewUIFactory, ProfileUIWindowManager windowManager,
             ProfileController profileController)
         {
-            _configProvider = configProvider;
+            _staticDataProvider = staticDataProvider;
             _instantiator = instantiator;
             _achievementsUIFactory = achievementsUIFactory;
             _overviewUIFactory = overviewUIFactory;
@@ -29,7 +29,7 @@ namespace ProjectCore.Scripts.Profile
             _profileController = profileController;
         }
 
-        public void Initialize() => _config = _configProvider.GetConfig();
+        public void Initialize() => _config = _staticDataProvider.GetConfig();
 
         public void Create()
         {

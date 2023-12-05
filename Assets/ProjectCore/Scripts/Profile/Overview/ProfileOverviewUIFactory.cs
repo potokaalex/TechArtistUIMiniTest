@@ -7,17 +7,17 @@ namespace ProjectCore.Scripts.Profile.Overview
 {
     public class ProfileOverviewUIFactory : IInitializable
     {
-        private readonly ProfileConfigProvider _configProvider;
+        private readonly ProfileStaticDataProvider _staticDataProvider;
         private readonly IInstantiator _instantiator;
         private ProfileConfig _config;
 
-        public ProfileOverviewUIFactory(ProfileConfigProvider configProvider, IInstantiator instantiator)
+        public ProfileOverviewUIFactory(ProfileStaticDataProvider staticDataProvider, IInstantiator instantiator)
         {
-            _configProvider = configProvider;
+            _staticDataProvider = staticDataProvider;
             _instantiator = instantiator;
         }
 
-        public void Initialize() => _config = _configProvider.GetConfig();
+        public void Initialize() => _config = _staticDataProvider.GetConfig();
 
         public ProfileOverviewView CreateView(Transform root)
         {

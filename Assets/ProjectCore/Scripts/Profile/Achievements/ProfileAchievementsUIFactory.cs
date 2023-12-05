@@ -7,17 +7,17 @@ namespace ProjectCore.Scripts.Profile.Achievements
 {
     public class ProfileAchievementsUIFactory : IInitializable
     {
-        private readonly ProfileConfigProvider _configProvider;
+        private readonly ProfileStaticDataProvider _staticDataProvider;
         private readonly IInstantiator _instantiator;
         private ProfileConfig _config;
 
-        public ProfileAchievementsUIFactory(ProfileConfigProvider configProvider, IInstantiator instantiator)
+        public ProfileAchievementsUIFactory(ProfileStaticDataProvider staticDataProvider, IInstantiator instantiator)
         {
-            _configProvider = configProvider;
+            _staticDataProvider = staticDataProvider;
             _instantiator = instantiator;
         }
 
-        public void Initialize() => _config = _configProvider.GetConfig();
+        public void Initialize() => _config = _staticDataProvider.GetConfig();
 
         public ProfileAchievementsView CreateView(Transform root)
         {
